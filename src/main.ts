@@ -5,7 +5,14 @@ import type { Users } from './UsersInterfaces.ts'
 const API_URL = "https://retoolapi.dev/rdieG6/data"
 
 async function fetchData() {
-  const response = await fetch(API_URL)
+  const response = await fetch(API_URL, {
+    method: 'GET',headers: {
+    'Content-Type': 'application/json'
+  }
+  })
+  if (!response.ok) {
+    throw new Error(`ERROR: ${response.status}`)
+  }
   const data = await response.json()
   console.log(data)
   const users: Users[] = data.map((user: any) => ({
